@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="AppTheme" parent="Theme.AppCompat.Light">
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="colorPrimary">@color/colorTransparent</item>
+        <item name="colorPrimaryDark">#E0E0E0</item>
+
+    </style>
+
+</resources>
