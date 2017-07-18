@@ -13,11 +13,13 @@ Duet is very much still a work-in-progress, and I will be updating this repo as 
 ## Current features
 
 * Add projects with name and description
+* Add tasks under projects
 
 ## Upcoming features
 
-* Add tasks under projects
-* Open projects to view the description, and the list of tasks
+* Subtasks
+* Mark tasks as complete
+* Due date & deadline for tasks
 
 ## Contribute
 
