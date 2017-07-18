@@ -1,19 +1,21 @@
 package com.gadgetroid.duet;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import com.gadgetroid.duet.adapter.ProjectsAdapter;
 import com.gadgetroid.duet.model.Project;
+import com.gadgetroid.duet.views.ProjectActivity;
 
 import io.realm.Realm;
 import io.realm.RealmResults;
@@ -21,7 +23,6 @@ import io.realm.RealmResults;
 public class MainActivity extends AppCompatActivity implements AddProjectDialogFragment.AddProjectDialogListener {
 
     private Realm realm;
-    private RecyclerView recyclerView;
     private ListView listView;
     private ProjectsAdapter adapter;
 
@@ -39,7 +40,6 @@ public class MainActivity extends AppCompatActivity implements AddProjectDialogF
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TODO Launch DialogFagment
                 showAddProjectDialog();
             }
         });
@@ -69,10 +69,15 @@ public class MainActivity extends AppCompatActivity implements AddProjectDialogF
 
     @Override
     public void onFinishAddDialog(String name, String description) {
-        // TODO Add to Realm database
         realm = Realm.getDefaultInstance();
         realm.beginTransaction();
-        Project project = realm.createObject(Project.class);
+        int nextId;
+        if (realm.where(Project.class).count() == 0) {
+            nextId = 1;
+        } else {
+            nextId = (realm.where(Project.class).findAll().max("projectId").intValue() + 1);
+        }
+        Project project = realm.createObject(Project.class, nextId);
         project.setProjectName(name);
         project.setProjectDescription(description);
         realm.commitTransaction();
@@ -86,16 +91,18 @@ public class MainActivity extends AppCompatActivity implements AddProjectDialogF
     }
 
     private void setUpListView() {
-        //TODO Set up ListView
         RealmResults<Project> projects = realm.where(Project.class).findAll();
         adapter = new ProjectsAdapter(projects);
         listView.setAdapter(adapter);
-    }
-
-    private void setUpRecyclerView() {
-//        adapter = new ProjectsAdapter(realm.where(Project.class).findAll());
-//        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-//        recyclerView.setAdapter(adapter);
-//        recyclerView.setHasFixedSize(true);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(getApplicationContext(), ProjectActivity.class);
+                //TODO Send extras to identify and show description
+                Project project = adapter.getItem(position);
+                intent.putExtra("id", project.getProjectId());
+                startActivity(intent);
+            }
+        });
     }
 }
