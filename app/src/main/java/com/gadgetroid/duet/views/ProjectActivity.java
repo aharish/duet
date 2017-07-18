@@ -105,6 +105,8 @@ public class ProjectActivity extends AppCompatActivity implements AddTaskDialogF
         project.setProjectName(name);
         project.setProjectDescription(description);
         realm.commitTransaction();
+        projectTitle.setText(project.getProjectName());
+        projectDesc.setText(project.getProjectDescription());
         realm.close();
     }
 
