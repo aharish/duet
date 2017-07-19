@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -140,5 +141,11 @@ public class ProjectActivity extends AppCompatActivity implements AddTaskDialogF
         RealmResults<Task> tasks = realm.where(Task.class).equalTo("project.projectId", getIntent().getIntExtra("id", 1)).findAll();
         adapter = new TasksAdapter(tasks);
         tasksListView.setAdapter(adapter);
+        tasksListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(ProjectActivity.this, "Position " + position + " clicked", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }
