@@ -61,6 +61,12 @@ public class ProjectActivity extends AppCompatActivity implements AddTaskDialogF
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        realm.close();
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_project, menu);
         return true;
@@ -144,7 +150,7 @@ public class ProjectActivity extends AppCompatActivity implements AddTaskDialogF
         tasksListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(ProjectActivity.this, "Position " + position + " clicked", Toast.LENGTH_SHORT).show();
+                //TODO Show Task Details Dialog
             }
         });
     }
