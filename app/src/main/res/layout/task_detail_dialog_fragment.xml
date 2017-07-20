@@ -40,7 +40,7 @@
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead"
                 android:hint="Task title"
                 android:textSize="18sp"
-                android:inputType="textCapWords|textAutoComplete"
+                android:inputType="textCapSentences|textAutoComplete"
                 android:imeOptions="actionDone"/>
 
         </ViewSwitcher>
@@ -71,7 +71,7 @@
             android:paddingLeft="0dp"
             android:paddingRight="0dp"
             android:hint="@string/enter_project_description"
-            android:inputType="textCapWords|textAutoComplete"
+            android:inputType="textCapSentences|textAutoComplete"
             android:imeOptions="actionDone"/>
 
     </ViewSwitcher>
