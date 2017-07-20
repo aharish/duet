@@ -12,6 +12,7 @@ import com.gadgetroid.duet.R;
 import com.gadgetroid.duet.model.Task;
 
 import io.realm.OrderedRealmCollection;
+import io.realm.Realm;
 import io.realm.RealmBaseAdapter;
 
 /**
@@ -32,7 +33,7 @@ public class TasksAdapter extends RealmBaseAdapter<Task> implements ListAdapter 
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        ViewHolder viewHolder;
+        final ViewHolder viewHolder;
 
         if (convertView == null) {
             convertView = LayoutInflater.from(parent.getContext())
@@ -48,6 +49,16 @@ public class TasksAdapter extends RealmBaseAdapter<Task> implements ListAdapter 
         if (adapterData != null) {
             final Task item = adapterData.get(position);
             viewHolder.taskTitleTextView.setText(item.getTaskTitle());
+            viewHolder.taskCompleteCheckbox.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Realm realm = Realm.getDefaultInstance();
+                    Task task = realm.where(Task.class).equalTo("taskId", item.getTaskId()).findFirst();
+                    realm.beginTransaction();
+                    task.setTaskComplete(viewHolder.taskCompleteCheckbox.isChecked() ? true : false);
+                    realm.commitTransaction();
+                }
+            });
             if (item.isTaskComplete()) {
                 viewHolder.taskCompleteCheckbox.setChecked(true);
             } else {

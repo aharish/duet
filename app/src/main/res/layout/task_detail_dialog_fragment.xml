@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="12dp"
+    android:paddingRight="12dp"
+    android:paddingTop="16dp"
+    android:paddingBottom="28dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <CheckBox
+            android:id="@+id/task_detail_checkbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"/>
+
+        <ViewSwitcher
+            android:id="@+id/task_detail_title_view_switcher"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp">
+
+            <TextView
+                android:id="@+id/task_detail_title_text_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead"
+                android:textSize="18sp"
+                android:text="Task"/>
+
+            <EditText
+                android:id="@+id/task_detail_title_edit_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead"
+                android:hint="Task title"
+                android:textSize="18sp"
+                android:inputType="textCapWords|textAutoComplete"
+                android:imeOptions="actionDone"/>
+
+        </ViewSwitcher>
+
+    </LinearLayout>
+
+    <ViewSwitcher
+        android:id="@+id/task_detail_desc_view_switcher"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginLeft="42dp">
+
+        <TextView
+            android:id="@+id/task_detail_desc_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+
+        <EditText
+            android:id="@+id/task_detail_desc_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:paddingTop="0dp"
+            android:paddingBottom="12dp"
+            android:paddingLeft="0dp"
+            android:paddingRight="0dp"
+            android:hint="@string/enter_project_description"
+            android:inputType="textCapWords|textAutoComplete"
+            android:imeOptions="actionDone"/>
+
+    </ViewSwitcher>
+
+</LinearLayout>

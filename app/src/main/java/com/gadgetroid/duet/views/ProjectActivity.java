@@ -9,6 +9,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -16,6 +17,7 @@ import android.widget.Toast;
 import com.gadgetroid.duet.AddTaskDialogFragment;
 import com.gadgetroid.duet.EditProjectDialogFragment;
 import com.gadgetroid.duet.R;
+import com.gadgetroid.duet.TaskDetailsDialogFragment;
 import com.gadgetroid.duet.adapter.TasksAdapter;
 import com.gadgetroid.duet.model.Project;
 import com.gadgetroid.duet.model.Task;
@@ -30,6 +32,7 @@ public class ProjectActivity extends AppCompatActivity implements AddTaskDialogF
     private FloatingActionButton addTaskFab;
     private ListView tasksListView;
     private TasksAdapter adapter;
+    private CheckBox taskDoneCheckbox;
 
     private int pId;
 
@@ -46,6 +49,7 @@ public class ProjectActivity extends AppCompatActivity implements AddTaskDialogF
         projectDesc = (TextView) findViewById(R.id.activity_project_desc_textview);
         addTaskFab = (FloatingActionButton) findViewById(R.id.activity_project_fab);
         tasksListView = (ListView) findViewById(R.id.activity_project_task_listview);
+        taskDoneCheckbox = (CheckBox) findViewById(R.id.task_done_checkbox);
 
         addTaskFab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,7 +80,6 @@ public class ProjectActivity extends AppCompatActivity implements AddTaskDialogF
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.project_action_edit) {
-            //TODO Launch DialogFragment
             showEditProjectDialog();
             return true;
         }
@@ -134,6 +137,15 @@ public class ProjectActivity extends AppCompatActivity implements AddTaskDialogF
         fragment.show(fm, "fragment_edit_project");
     }
 
+    private void showTaskDetailsDialog(int taskId) {
+        FragmentManager fm = getSupportFragmentManager();
+        Bundle args = new Bundle();
+        args.putInt("taskId", taskId);
+        TaskDetailsDialogFragment fragment = TaskDetailsDialogFragment.newInstance("Task details");
+        fragment.setArguments(args);
+        fragment.show(fm, "fragment_task_details");
+    }
+
     private void setMetadata() {
         Intent intent = getIntent();
         int id = intent.getIntExtra("id", 1);
@@ -151,6 +163,8 @@ public class ProjectActivity extends AppCompatActivity implements AddTaskDialogF
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 //TODO Show Task Details Dialog
+                Task task = adapter.getItem(position);
+                showTaskDetailsDialog(task.getTaskId());
             }
         });
     }
