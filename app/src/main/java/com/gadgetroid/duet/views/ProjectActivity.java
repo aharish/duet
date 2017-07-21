@@ -156,7 +156,7 @@ public class ProjectActivity extends AppCompatActivity implements AddTaskDialogF
 
     private void setupListView() {
         Project project = realm.where(Project.class).equalTo("projectId", getIntent().getIntExtra("id", 1)).findFirst();
-        RealmResults<Task> tasks = realm.where(Task.class).equalTo("project.projectId", getIntent().getIntExtra("id", 1)).findAll();
+        RealmResults<Task> tasks = realm.where(Task.class).equalTo("project.projectId", getIntent().getIntExtra("id", 1)).findAll().sort("isTaskComplete");
         adapter = new TasksAdapter(tasks);
         tasksListView.setAdapter(adapter);
         tasksListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
