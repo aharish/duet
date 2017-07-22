@@ -17,6 +17,7 @@ import android.widget.Toast;
 import com.gadgetroid.duet.AddTaskDialogFragment;
 import com.gadgetroid.duet.EditProjectDialogFragment;
 import com.gadgetroid.duet.R;
+import com.gadgetroid.duet.TaskBottomSheetDialog;
 import com.gadgetroid.duet.TaskDetailsDialogFragment;
 import com.gadgetroid.duet.adapter.TasksAdapter;
 import com.gadgetroid.duet.model.Project;
@@ -165,6 +166,18 @@ public class ProjectActivity extends AppCompatActivity implements AddTaskDialogF
                 //TODO Show Task Details Dialog
                 Task task = adapter.getItem(position);
                 showTaskDetailsDialog(task.getTaskId());
+            }
+        });
+        tasksListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                Bundle args = new Bundle();
+                Task task = adapter.getItem(position);
+                args.putInt("taskId", task.getTaskId());
+                TaskBottomSheetDialog taskBottomSheetDialog = TaskBottomSheetDialog.newInstance();
+                taskBottomSheetDialog.setArguments(args);
+                taskBottomSheetDialog.show(getSupportFragmentManager(), "task_bottom_sheet");
+                return true;
             }
         });
     }

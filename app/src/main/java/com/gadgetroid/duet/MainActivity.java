@@ -2,6 +2,7 @@ package com.gadgetroid.duet;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
@@ -10,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -25,6 +27,8 @@ public class MainActivity extends AppCompatActivity implements AddProjectDialogF
     private Realm realm;
     private ListView listView;
     private ProjectsAdapter adapter;
+    private LinearLayout projectBottomSheet, projectDelete;
+    private BottomSheetBehavior bottomSheetBehavior;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,6 +112,18 @@ public class MainActivity extends AppCompatActivity implements AddProjectDialogF
                 Project project = adapter.getItem(position);
                 intent.putExtra("id", project.getProjectId());
                 startActivity(intent);
+            }
+        });
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                Project project = adapter.getItem(position);
+                Bundle args = new Bundle();
+                args.putInt("projectId", project.getProjectId());
+                ProjectBottomSheetDialog bottomSheetDialog = ProjectBottomSheetDialog.getInstance();
+                bottomSheetDialog.setArguments(args);
+                bottomSheetDialog.show(getSupportFragmentManager(), "project_bottom_sheet");
+                return true;
             }
         });
     }

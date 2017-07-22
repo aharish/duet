@@ -8,4 +8,5 @@
     <string name="enter_task_name">Title</string>
     <string name="add_task_title">Add Task</string>
     <string name="project_action_edit">Edit project</string>
+    <string name="delete">Delete</string>
 </resources>
