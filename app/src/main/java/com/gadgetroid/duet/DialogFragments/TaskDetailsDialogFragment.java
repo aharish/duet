@@ -1,4 +1,4 @@
-package com.gadgetroid.duet;
+package com.gadgetroid.duet.DialogFragments;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -16,6 +16,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.ViewSwitcher;
 
+import com.gadgetroid.duet.R;
 import com.gadgetroid.duet.model.Task;
 
 import io.realm.Realm;

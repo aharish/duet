@@ -14,11 +14,11 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.gadgetroid.duet.AddTaskDialogFragment;
-import com.gadgetroid.duet.EditProjectDialogFragment;
+import com.gadgetroid.duet.DialogFragments.AddTaskDialogFragment;
+import com.gadgetroid.duet.DialogFragments.EditProjectDialogFragment;
 import com.gadgetroid.duet.R;
-import com.gadgetroid.duet.TaskBottomSheetDialog;
-import com.gadgetroid.duet.TaskDetailsDialogFragment;
+import com.gadgetroid.duet.BottomSheetDialogs.TaskBottomSheetDialog;
+import com.gadgetroid.duet.DialogFragments.TaskDetailsDialogFragment;
 import com.gadgetroid.duet.adapter.TasksAdapter;
 import com.gadgetroid.duet.model.Project;
 import com.gadgetroid.duet.model.Task;

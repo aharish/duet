@@ -1,4 +1,4 @@
-package com.gadgetroid.duet;
+package com.gadgetroid.duet.views;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,9 +15,11 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.gadgetroid.duet.DialogFragments.AddProjectDialogFragment;
+import com.gadgetroid.duet.BottomSheetDialogs.ProjectBottomSheetDialog;
+import com.gadgetroid.duet.R;
 import com.gadgetroid.duet.adapter.ProjectsAdapter;
 import com.gadgetroid.duet.model.Project;
-import com.gadgetroid.duet.views.ProjectActivity;
 
 import io.realm.Realm;
 import io.realm.RealmResults;

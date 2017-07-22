@@ -1,4 +1,4 @@
-package com.gadgetroid.duet;
+package com.gadgetroid.duet.helper;
 
 import io.realm.Realm;
 

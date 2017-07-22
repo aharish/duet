@@ -1,4 +1,4 @@
-package com.gadgetroid.duet;
+package com.gadgetroid.duet.BottomSheetDialogs;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import com.gadgetroid.duet.R;
 import com.gadgetroid.duet.model.Project;
 
 import io.realm.Realm;
