@@ -1,8 +1,6 @@
 package com.gadgetroid.duet.views;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
@@ -10,37 +8,25 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import com.gadgetroid.duet.DialogFragments.AddProjectDialogFragment;
-import com.gadgetroid.duet.BottomSheetDialogs.ProjectBottomSheetDialog;
 import com.gadgetroid.duet.R;
-import com.gadgetroid.duet.adapter.ProjectsAdapter;
 import com.gadgetroid.duet.model.Project;
 
 import io.realm.Realm;
-import io.realm.RealmResults;
 
 public class MainActivity extends AppCompatActivity implements AddProjectDialogFragment.AddProjectDialogListener {
 
     private Realm realm;
-    private ListView listView;
-    private ProjectsAdapter adapter;
-    private LinearLayout projectBottomSheet, projectDelete;
-    private BottomSheetBehavior bottomSheetBehavior;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         realm = Realm.getDefaultInstance();
-        listView = (ListView) findViewById(R.id.projectsListView);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        setUpListView();
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -100,33 +86,5 @@ public class MainActivity extends AppCompatActivity implements AddProjectDialogF
         FragmentManager fm = getSupportFragmentManager();
         AddProjectDialogFragment addProjectDialogFragment = AddProjectDialogFragment.newInstance("New project");
         addProjectDialogFragment.show(fm, "fragment_add_project");
-    }
-
-    private void setUpListView() {
-        RealmResults<Project> projects = realm.where(Project.class).findAll();
-        adapter = new ProjectsAdapter(projects);
-        listView.setAdapter(adapter);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(getApplicationContext(), ProjectActivity.class);
-                //TODO Send extras to identify and show description
-                Project project = adapter.getItem(position);
-                intent.putExtra("id", project.getProjectId());
-                startActivity(intent);
-            }
-        });
-        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                Project project = adapter.getItem(position);
-                Bundle args = new Bundle();
-                args.putInt("projectId", project.getProjectId());
-                ProjectBottomSheetDialog bottomSheetDialog = ProjectBottomSheetDialog.getInstance();
-                bottomSheetDialog.setArguments(args);
-                bottomSheetDialog.show(getSupportFragmentManager(), "project_bottom_sheet");
-                return true;
-            }
-        });
     }
 }

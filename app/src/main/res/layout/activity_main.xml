@@ -23,22 +23,12 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <RelativeLayout
-        android:id="@+id/content_main"
+    <fragment
+        android:layout_marginTop="52dp"
+        android:id="@+id/project_fragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingBottom="8dp"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin"
-        android:paddingTop="8dp"
-        android:layout_marginTop="56dp">
-
-        <ListView
-            android:id="@+id/projectsListView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-    </RelativeLayout>
+        android:name="com.gadgetroid.duet.fragments.ProjectFragment"/>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
