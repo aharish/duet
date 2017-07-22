@@ -18,7 +18,7 @@ Duet is very much still a work-in-progress, and I will be updating this repo as 
 
 ## Upcoming features
 
-* Delete projects and tasks under the project
+* <del>Delete projects and tasks under the project</del> <mark>Done</mark>
 * Subtasks
 * Due date & deadline for tasks
 
