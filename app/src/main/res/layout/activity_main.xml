@@ -23,12 +23,11 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <fragment
+    <FrameLayout
         android:layout_marginTop="52dp"
-        android:id="@+id/project_fragment"
+        android:id="@+id/project_fragment_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:name="com.gadgetroid.duet.fragments.ProjectFragment"/>
+        android:layout_height="match_parent"/>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"

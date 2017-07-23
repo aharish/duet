@@ -1,6 +1,5 @@
 package com.gadgetroid.duet.fragments;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -14,7 +13,6 @@ import com.gadgetroid.duet.BottomSheetDialogs.ProjectBottomSheetDialog;
 import com.gadgetroid.duet.R;
 import com.gadgetroid.duet.adapter.ProjectsAdapter;
 import com.gadgetroid.duet.model.Project;
-import com.gadgetroid.duet.views.ProjectActivity;
 
 import io.realm.Realm;
 import io.realm.RealmResults;
@@ -24,6 +22,12 @@ import io.realm.RealmResults;
  */
 
 public class ProjectFragment extends Fragment {
+
+    public interface ChangeProjectFABActionListener {
+        void projectFragmentChangeFAB();
+    }
+
+    private static final String PROJECT_FRAGMENT_EDIT = "project_fragment_edit";
 
     private Realm realm;
     private ListView listView;
@@ -40,6 +44,8 @@ public class ProjectFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         realm = Realm.getDefaultInstance();
         listView = (ListView) view.findViewById(R.id.projectsListView);
+        ChangeProjectFABActionListener listener = (ChangeProjectFABActionListener) getActivity();
+        listener.projectFragmentChangeFAB();
         setUpListView();
     }
 
@@ -50,11 +56,15 @@ public class ProjectFragment extends Fragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(getContext(), ProjectActivity.class);
-                //TODO Send extras to identify and show description
+                ProjectDetailFragment projectDetailFragment = new ProjectDetailFragment();
+                Bundle args = new Bundle();
                 Project project = adapter.getItem(position);
-                intent.putExtra("id", project.getProjectId());
-                startActivity(intent);
+                args.putInt("projectId", project.getProjectId());
+                projectDetailFragment.setArguments(args);
+                getFragmentManager().beginTransaction()
+                        .replace(R.id.project_fragment_container, projectDetailFragment, PROJECT_FRAGMENT_EDIT)
+                        .addToBackStack(null)
+                        .commit();
             }
         });
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {

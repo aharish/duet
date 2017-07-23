@@ -22,19 +22,21 @@ public class AddTaskDialogFragment extends DialogFragment implements TextView.On
 
     private EditText titleEditText, descriptionEditText;
 
-    //TODO Add Interface to add to Realm
+    private int pId;
+
     public interface AddTaskDialogListener {
-        void onFinishAddTask(String title, String description, boolean isComplete);
+        void onFinishAddTask(String title, String description, boolean isComplete, int projectId);
     }
 
     public AddTaskDialogFragment() {
         //Empty constructor
     }
 
-    public static AddTaskDialogFragment newInstance(String title) {
+    public static AddTaskDialogFragment newInstance(String title, int projectId) {
         AddTaskDialogFragment frag = new AddTaskDialogFragment();
         Bundle args = new Bundle();
         args.putString("title", title);
+        args.putInt("projectId", projectId);
         frag.setArguments(args);
         return frag;
     }
@@ -54,7 +56,8 @@ public class AddTaskDialogFragment extends DialogFragment implements TextView.On
             addTaskDialogListener.onFinishAddTask(
                     titleEditText.getText().toString(),
                     descriptionEditText.getText().toString(),
-                    false
+                    false,
+                    pId
             );
             dismiss();
         }
@@ -74,6 +77,7 @@ public class AddTaskDialogFragment extends DialogFragment implements TextView.On
         descriptionEditText = (EditText) view.findViewById(R.id.add_task_dialog_description_edittext);
         String title = getArguments().getString("title", "New Task");
         getDialog().setTitle(title);
+        pId = getArguments().getInt("projectId");
         titleEditText.requestFocus();
         getDialog().getWindow().setSoftInputMode(
                 WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);

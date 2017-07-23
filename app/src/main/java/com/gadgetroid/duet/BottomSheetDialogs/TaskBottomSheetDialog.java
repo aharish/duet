@@ -3,7 +3,6 @@ package com.gadgetroid.duet.BottomSheetDialogs;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetDialogFragment;
-import android.support.design.widget.Snackbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,7 +46,7 @@ public class TaskBottomSheetDialog extends BottomSheetDialogFragment {
                 Task task = realm.where(Task.class).equalTo("taskId", taskId).findFirst();
                 task.deleteFromRealm();
                 realm.commitTransaction();
-                Snackbar.make(getActivity().findViewById(R.id.activity_project), "Task deleted", Snackbar.LENGTH_SHORT).show();
+//                Snackbar.make(getActivity().findViewById(R.id.activity_project), "Task deleted", Snackbar.LENGTH_SHORT).show();
                 dismiss();
             }
         });
