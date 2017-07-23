@@ -2,10 +2,5 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.gadgetroid.duet.views.MainActivity">
-    <item
-        android:id="@+id/project_action_edit"
-        android:orderInCategory="1"
-        android:title="@string/project_action_edit"
-        android:icon="@drawable/ic_edit_grey_700_24dp"
-        app:showAsAction="always" />
+
 </menu>

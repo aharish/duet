@@ -2,16 +2,18 @@ package com.gadgetroid.duet.views;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.transition.Slide;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Toast;
 
 import com.gadgetroid.duet.DialogFragments.AddProjectDialogFragment;
 import com.gadgetroid.duet.DialogFragments.AddTaskDialogFragment;
+import com.gadgetroid.duet.DialogFragments.EditProjectDialogFragment;
 import com.gadgetroid.duet.R;
 import com.gadgetroid.duet.fragments.ProjectDetailFragment;
 import com.gadgetroid.duet.fragments.ProjectFragment;
@@ -21,11 +23,16 @@ import com.gadgetroid.duet.model.Task;
 import io.realm.Realm;
 
 public class MainActivity extends AppCompatActivity implements AddProjectDialogFragment.AddProjectDialogListener,
-        ProjectFragment.ChangeProjectFABActionListener, ProjectDetailFragment.ChangeProjectDetailFABActionListener, AddTaskDialogFragment.AddTaskDialogListener {
+        ProjectFragment.ChangeProjectFABActionListener, ProjectDetailFragment.ChangeProjectDetailFABActionListener,
+        AddTaskDialogFragment.AddTaskDialogListener, EditProjectDialogFragment.EditProjectDialogListener {
 
     private Realm realm;
     private static final String PROJECT_FRAGMENT = "project_fragment";
     private static final String PROJECT_FRAGMENT_EDIT = "project_fragment_edit";
+
+    public interface projectMetadataListener {
+        void updateTextViews();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +48,12 @@ public class MainActivity extends AppCompatActivity implements AddProjectDialogF
             }
 
             ProjectFragment projectFragment = new ProjectFragment();
-
+            Slide slideIn = new Slide();
+            slideIn.setSlideEdge(Gravity.END);
+            projectFragment.setEnterTransition(slideIn);
+            Slide slideOut = new Slide();
+            slideOut.setSlideEdge(Gravity.START);
+            projectFragment.setExitTransition(slideOut);
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.project_fragment_container, projectFragment).commit();
         }
@@ -51,28 +63,6 @@ public class MainActivity extends AppCompatActivity implements AddProjectDialogF
     protected void onDestroy() {
         super.onDestroy();
         realm.close();
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -98,6 +88,19 @@ public class MainActivity extends AppCompatActivity implements AddProjectDialogF
     }
 
     @Override
+    public void onFinishEditDialog(String name, String description, int pId) {
+        //TODO Save edits to Realm
+        realm = Realm.getDefaultInstance();
+        realm.beginTransaction();
+        Project project = realm.where(Project.class).equalTo("projectId", pId).findFirst();
+//        project.setProjectName(name);
+        project.setProjectDescription(description);
+        realm.commitTransaction();
+        Fragment fragment = getSupportFragmentManager().findFragmentByTag(PROJECT_FRAGMENT_EDIT);
+        ((ProjectDetailFragment) fragment).setMetadata();
+    }
+
+    @Override
     public void onFinishAddDialog(String name, String description) {
         realm = Realm.getDefaultInstance();
         realm.beginTransaction();
@@ -116,7 +119,7 @@ public class MainActivity extends AppCompatActivity implements AddProjectDialogF
 
     @Override
     public void onFinishAddTask(String title, String description, boolean isComplete, int pId) {
-        realm = realm.getDefaultInstance();
+        realm = Realm.getDefaultInstance();
         realm.beginTransaction();
         int nextId;
         if (realm.where(Task.class).count() == 0) {

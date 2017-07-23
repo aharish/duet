@@ -3,6 +3,7 @@ package com.gadgetroid.duet.fragments;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.transition.Fade;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,6 +34,12 @@ public class ProjectFragment extends Fragment {
     private ListView listView;
     private ProjectsAdapter adapter;
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -61,6 +68,10 @@ public class ProjectFragment extends Fragment {
                 Project project = adapter.getItem(position);
                 args.putInt("projectId", project.getProjectId());
                 projectDetailFragment.setArguments(args);
+                Fade fadeIn = new Fade(Fade.IN);
+                Fade fadeOut = new Fade(Fade.OUT);
+                projectDetailFragment.setEnterTransition(fadeIn);
+                projectDetailFragment.setExitTransition(fadeOut);
                 getFragmentManager().beginTransaction()
                         .replace(R.id.project_fragment_container, projectDetailFragment, PROJECT_FRAGMENT_EDIT)
                         .addToBackStack(null)

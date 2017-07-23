@@ -12,6 +12,7 @@
         android:id="@+id/task_title_textview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingLeft="16dp"
         android:text="Task 1"
         android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead"/>
 

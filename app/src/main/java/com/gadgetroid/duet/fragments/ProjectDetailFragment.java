@@ -6,6 +6,9 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -28,7 +31,7 @@ import io.realm.RealmResults;
  * Created by gadgetroid on 23/07/17.
  */
 
-public class ProjectDetailFragment extends Fragment implements EditProjectDialogFragment.EditProjectDialogListener {
+public class ProjectDetailFragment extends Fragment {
 
     private Realm realm;
     private TextView projectTitle, projectDesc;
@@ -41,6 +44,12 @@ public class ProjectDetailFragment extends Fragment implements EditProjectDialog
 
     public interface ChangeProjectDetailFABActionListener {
         void changeProjectDetailFAB(int projectId);
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
     }
 
     @Nullable
@@ -68,38 +77,27 @@ public class ProjectDetailFragment extends Fragment implements EditProjectDialog
         setMetadata();
     }
 
-//    @Override
-//    public void onFinishAddTask(String title, String description, boolean isComplete) {
-//        realm = realm.getDefaultInstance();
-//        realm.beginTransaction();
-//        int nextId;
-//        if (realm.where(Task.class).count() == 0) {
-//            nextId = 1;
-//        } else {
-//            nextId = (realm.where(Task.class).findAll().max("taskId").intValue() + 1);
-//        }
-//        Task task = realm.createObject(Task.class, nextId);
-//        task.setTaskTitle(title);
-//        task.setTaskDescription(description);
-//        task.setTaskComplete(isComplete);
-//        Project project = realm.where(Project.class).equalTo("projectId", pId).findFirst();
-//        task.setProject(project);
-//        realm.commitTransaction();
-//        Toast.makeText(getContext(), "Added task successfully", Toast.LENGTH_SHORT).show();
-//    }
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater menuInflater) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        menuInflater.inflate(R.menu.menu_main, menu);
+        super.onCreateOptionsMenu(menu, menuInflater);
+    }
 
     @Override
-    public void onFinishEditDialog(String name, String description) {
-        //TODO Save edits to Realm
-        realm = realm.getDefaultInstance();
-        realm.beginTransaction();
-        Project project = realm.where(Project.class).equalTo("projectId", pId).findFirst();
-        project.setProjectName(name);
-        project.setProjectDescription(description);
-        realm.commitTransaction();
-        projectTitle.setText(project.getProjectName());
-        projectDesc.setText(project.getProjectDescription());
-        realm.close();
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.project_action_edit) {
+            showEditProjectDialog();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     private void showEditProjectDialog() {
@@ -108,6 +106,7 @@ public class ProjectDetailFragment extends Fragment implements EditProjectDialog
         Project project = realm.where(Project.class).equalTo("projectId", pId).findFirst();
         args.putString("name", project.getProjectName());
         args.putString("description", project.getProjectDescription());
+        args.putInt("id", project.getProjectId());
         EditProjectDialogFragment fragment = EditProjectDialogFragment.newInstance("Edit Project");
         fragment.setArguments(args);
         fragment.show(fm, "fragment_edit_project");
@@ -122,7 +121,7 @@ public class ProjectDetailFragment extends Fragment implements EditProjectDialog
         fragment.show(fm, "fragment_task_details");
     }
 
-    private void setMetadata() {
+    public void setMetadata() {
         Project project = realm.where(Project.class).equalTo("projectId", pId).findFirst();
         projectTitle.setText(project.getProjectName());
         projectDesc.setText(project.getProjectDescription());

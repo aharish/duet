@@ -3,8 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.gadgetroid.duet.views.MainActivity">
     <item
-        android:id="@+id/action_settings"
-        android:orderInCategory="100"
-        android:title="@string/action_settings"
-        app:showAsAction="never" />
+        android:id="@+id/project_action_edit"
+        android:orderInCategory="1"
+        android:title="@string/project_action_edit"
+        android:icon="@drawable/ic_edit_grey_700_24dp"
+        app:showAsAction="always" />
 </menu>

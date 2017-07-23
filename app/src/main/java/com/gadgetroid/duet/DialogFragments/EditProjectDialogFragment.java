@@ -21,9 +21,10 @@ import com.gadgetroid.duet.R;
 public class EditProjectDialogFragment extends DialogFragment implements TextView.OnEditorActionListener {
 
     private EditText nameEditText, descriptionEditText;
+    private int projectId;
 
     public interface EditProjectDialogListener {
-        void onFinishEditDialog(String name, String description);
+        void onFinishEditDialog(String name, String description, int projectId);
     }
 
     public EditProjectDialogFragment() {
@@ -50,6 +51,7 @@ public class EditProjectDialogFragment extends DialogFragment implements TextVie
         nameEditText = (EditText) view.findViewById(R.id.add_project_dialog_name_edittext);
         descriptionEditText = (EditText) view.findViewById(R.id.add_project_dialog_description_edittext);
         String title = getArguments().getString("title", "New Project");
+        projectId = getArguments().getInt("id");
         getDialog().setTitle(title);
         nameEditText.setText(getArguments().getString("name"));
         descriptionEditText.setText(getArguments().getString("description"));
@@ -63,7 +65,7 @@ public class EditProjectDialogFragment extends DialogFragment implements TextVie
     public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
         if (EditorInfo.IME_ACTION_DONE == actionId) {
             EditProjectDialogListener listener = (EditProjectDialogListener) getActivity();
-            listener.onFinishEditDialog(nameEditText.getText().toString(), descriptionEditText.getText().toString());
+            listener.onFinishEditDialog(nameEditText.getText().toString(), descriptionEditText.getText().toString(), projectId);
             dismiss();
             return true;
         }
