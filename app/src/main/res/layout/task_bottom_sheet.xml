@@ -9,9 +9,11 @@
     <LinearLayout
         android:id="@+id/task_delete_action"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
+        android:layout_height="64dp"
         android:background="?attr/selectableItemBackgroundBorderless"
         android:orientation="horizontal"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
         android:paddingLeft="16dp"
         android:paddingRight="16dp"
         android:gravity="center">
@@ -20,8 +22,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_delete_grey_700_24dp"
-            android:paddingLeft="16px"
-            android:paddingRight="24px"/>
+            android:paddingRight="24dp"/>
 
         <TextView
             android:layout_width="match_parent"

@@ -40,7 +40,6 @@ public class TaskBottomSheetDialog extends BottomSheetDialogFragment {
         taskDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO Delete task.
                 int taskId = getArguments().getInt("taskId");
                 realm.beginTransaction();
                 Task task = realm.where(Task.class).equalTo("taskId", taskId).findFirst();

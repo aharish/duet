@@ -1,22 +1,25 @@
 package com.gadgetroid.duet.views;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
+import android.support.transition.Fade;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.transition.Slide;
-import android.view.Gravity;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
 import com.gadgetroid.duet.DialogFragments.AddProjectDialogFragment;
-import com.gadgetroid.duet.DialogFragments.AddTaskDialogFragment;
+import com.gadgetroid.duet.DialogFragments.AddTaskToProjectDialogFragment;
 import com.gadgetroid.duet.DialogFragments.EditProjectDialogFragment;
 import com.gadgetroid.duet.R;
 import com.gadgetroid.duet.fragments.ProjectDetailFragment;
 import com.gadgetroid.duet.fragments.ProjectFragment;
+import com.gadgetroid.duet.fragments.TaskFragment;
 import com.gadgetroid.duet.model.Project;
 import com.gadgetroid.duet.model.Task;
 
@@ -24,23 +27,44 @@ import io.realm.Realm;
 
 public class MainActivity extends AppCompatActivity implements AddProjectDialogFragment.AddProjectDialogListener,
         ProjectFragment.ChangeProjectFABActionListener, ProjectDetailFragment.ChangeProjectDetailFABActionListener,
-        AddTaskDialogFragment.AddTaskDialogListener, EditProjectDialogFragment.EditProjectDialogListener {
+        AddTaskToProjectDialogFragment.AddTaskDialogListener, EditProjectDialogFragment.EditProjectDialogListener,
+        TaskFragment.AllTasksFABListener {
 
     private Realm realm;
+    private BottomNavigationView bottomNavigationView;
     private static final String PROJECT_FRAGMENT = "project_fragment";
     private static final String PROJECT_FRAGMENT_EDIT = "project_fragment_edit";
 
-    public interface projectMetadataListener {
-        void updateTextViews();
-    }
-
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         realm = Realm.getDefaultInstance();
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation_view);
         setSupportActionBar(toolbar);
+        bottomNavigationView.setSelectedItemId(R.id.bottom_view_projects);
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+                switch(item.getItemId()) {
+                    case R.id.bottom_view_tasks:
+                        changeFragment(item.getItemId(), savedInstanceState);
+                        break;
+
+                    case R.id.bottom_view_projects:
+                        changeFragment(item.getItemId(), savedInstanceState);
+                        break;
+
+                    case R.id.bottom_view_today:
+                        Toast.makeText(MainActivity.this, "Today", Toast.LENGTH_SHORT).show();
+                        break;
+                }
+
+                return true;
+            }
+        });
 
         if (findViewById(R.id.project_fragment_container) != null) {
             if (savedInstanceState != null) {
@@ -48,12 +72,6 @@ public class MainActivity extends AppCompatActivity implements AddProjectDialogF
             }
 
             ProjectFragment projectFragment = new ProjectFragment();
-            Slide slideIn = new Slide();
-            slideIn.setSlideEdge(Gravity.END);
-            projectFragment.setEnterTransition(slideIn);
-            Slide slideOut = new Slide();
-            slideOut.setSlideEdge(Gravity.START);
-            projectFragment.setExitTransition(slideOut);
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.project_fragment_container, projectFragment).commit();
         }
@@ -88,12 +106,15 @@ public class MainActivity extends AppCompatActivity implements AddProjectDialogF
     }
 
     @Override
+    public void setFAB() {
+        //TODO Open add task dialog
+    }
+
+    @Override
     public void onFinishEditDialog(String name, String description, int pId) {
-        //TODO Save edits to Realm
         realm = Realm.getDefaultInstance();
         realm.beginTransaction();
         Project project = realm.where(Project.class).equalTo("projectId", pId).findFirst();
-//        project.setProjectName(name);
         project.setProjectDescription(description);
         realm.commitTransaction();
         Fragment fragment = getSupportFragmentManager().findFragmentByTag(PROJECT_FRAGMENT_EDIT);
@@ -145,7 +166,42 @@ public class MainActivity extends AppCompatActivity implements AddProjectDialogF
 
     private void showAddTaskDialog(int projectId) {
         FragmentManager fm = getSupportFragmentManager();
-        AddTaskDialogFragment addTaskDialogFragment = AddTaskDialogFragment.newInstance("New task", projectId);
-        addTaskDialogFragment.show(fm, "fragment_add_task");
+        AddTaskToProjectDialogFragment addTaskToProjectDialogFragment = AddTaskToProjectDialogFragment.newInstance("New task", projectId);
+        addTaskToProjectDialogFragment.show(fm, "fragment_add_task");
+    }
+
+    private void changeFragment(int id, Bundle savedInstanceState) {
+        switch (id) {
+            case R.id.bottom_view_projects:
+                if (findViewById(R.id.project_fragment_container) != null) {
+                    if (savedInstanceState != null) {
+                        return;
+                    }
+
+                    ProjectFragment projectFragment = new ProjectFragment();
+                    android.transition.Fade fadeIn = new android.transition.Fade(Fade.IN);
+                    android.transition.Fade fadeOut = new android.transition.Fade(Fade.OUT);
+                    projectFragment.setEnterTransition(fadeIn);
+                    projectFragment.setReenterTransition(fadeIn);
+                    getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.project_fragment_container, projectFragment).commit();
+                }
+
+                break;
+            case R.id.bottom_view_tasks:
+                if (findViewById(R.id.project_fragment_container) != null) {
+                    if (savedInstanceState != null) {
+                        return;
+                    }
+
+                    TaskFragment taskFragment = new TaskFragment();
+                    android.transition.Fade fadeIn = new android.transition.Fade(Fade.IN);
+                    android.transition.Fade fadeOut = new android.transition.Fade(Fade.OUT);
+                    taskFragment.setEnterTransition(fadeIn);
+                    taskFragment.setReenterTransition(fadeIn);
+                    getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.project_fragment_container, taskFragment).commit();
+                }
+        }
     }
 }

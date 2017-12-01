@@ -66,7 +66,7 @@ public class AddTaskToProjectDialogFragment extends DialogFragment implements Te
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.add_task_dialog_fragment, container);
+        return inflater.inflate(R.layout.add_task_to_project_dialog_fragment, container);
     }
 
     @Override

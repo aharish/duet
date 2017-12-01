@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingLeft="12dp"
     android:paddingRight="12dp"
     android:paddingTop="16dp"
-    android:paddingBottom="28dp">
+    android:paddingBottom="8dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -75,5 +76,53 @@
             android:imeOptions="actionDone"/>
 
     </ViewSwitcher>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="16dp"
+        android:paddingBottom="8dp">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="@drawable/rounded_grey_pellet"
+            android:gravity="center_vertical"
+            android:layout_marginLeft="36dp">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_event_grey_700_24dp"
+                android:paddingRight="8dp"/>
+
+            <TextView
+                android:id="@+id/task_detail_when_due_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="12dp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                android:text="Mar 25 2017"/>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:paddingBottom="8dp">
+
+        <ImageButton
+            android:padding="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/ic_event_grey_700_24dp"
+            android:background="?android:selectableItemBackground"
+            android:id="@+id/task_detail_when_due_button" />
+
+    </RelativeLayout>
 
 </LinearLayout>

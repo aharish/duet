@@ -1,5 +1,7 @@
 package com.gadgetroid.duet.DialogFragments;
 
+import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -12,12 +14,17 @@ import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.ViewSwitcher;
 
 import com.gadgetroid.duet.R;
 import com.gadgetroid.duet.model.Task;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 import io.realm.Realm;
 
@@ -29,9 +36,11 @@ public class TaskDetailsDialogFragment extends DialogFragment implements TextVie
 
     private CheckBox taskIsDoneCheckBox;
     private ViewSwitcher titleViewSwitcher, descriptionViewSwitcher;
-    private TextView titleTextView, descriptionTextView;
+    public static TextView titleTextView, descriptionTextView, whenDueTextView;
     private EditText titleEditText, descriptionEditText;
+    private ImageButton dueOnButton;
     private Realm realm;
+    public static int pubTaskId;
 
     public TaskDetailsDialogFragment() {
         //Empty constructor
@@ -62,6 +71,7 @@ public class TaskDetailsDialogFragment extends DialogFragment implements TextVie
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         realm = realm.getDefaultInstance();
+        pubTaskId = getArguments().getInt("taskId");
         taskIsDoneCheckBox = (CheckBox) view.findViewById(R.id.task_detail_checkbox);
         titleViewSwitcher = (ViewSwitcher) view.findViewById(R.id.task_detail_title_view_switcher);
         descriptionViewSwitcher = (ViewSwitcher) view.findViewById(R.id.task_detail_desc_view_switcher);
@@ -69,6 +79,8 @@ public class TaskDetailsDialogFragment extends DialogFragment implements TextVie
         descriptionTextView = (TextView) view.findViewById(R.id.task_detail_desc_text_view);
         titleEditText = (EditText) view.findViewById(R.id.task_detail_title_edit_text);
         descriptionEditText = (EditText) view.findViewById(R.id.task_detail_desc_edit_text);
+        dueOnButton = (ImageButton) view.findViewById(R.id.task_detail_when_due_button);
+        whenDueTextView = (TextView) view.findViewById(R.id.task_detail_when_due_tv);
 
         descriptionEditText.setOnEditorActionListener(this);
         titleEditText.setOnEditorActionListener(this);
@@ -81,6 +93,16 @@ public class TaskDetailsDialogFragment extends DialogFragment implements TextVie
                 realm.beginTransaction();
                 task.setTaskComplete(isChecked ? true : false);
                 realm.commitTransaction();
+            }
+        });
+
+
+
+        dueOnButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DialogFragment datePickerFragment = new DatePickerFragment();
+                datePickerFragment.show(getFragmentManager(), "DatePicker");
             }
         });
 
@@ -121,6 +143,7 @@ public class TaskDetailsDialogFragment extends DialogFragment implements TextVie
         taskIsDoneCheckBox.setChecked(task.isTaskComplete() ? true : false);
         titleTextView.setText(task.getTaskTitle());
         descriptionTextView.setText(task.getTaskDescription());
+        whenDueTextView.setText(task.getTaskDueOn());
         titleTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -145,5 +168,40 @@ public class TaskDetailsDialogFragment extends DialogFragment implements TextVie
                 descriptionEditText.setSelection(descriptionEditText.getText().length());
             }
         });
+    }
+
+    public static class DatePickerFragment extends DialogFragment
+            implements DatePickerDialog.OnDateSetListener {
+
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            // Use the current date as the default date in the picker
+            final Calendar c = Calendar.getInstance();
+            int year = c.get(Calendar.YEAR);
+            int month = c.get(Calendar.MONTH);
+            int day = c.get(Calendar.DAY_OF_MONTH);
+
+            // Create a new instance of DatePickerDialog and return it
+            return new DatePickerDialog(getActivity(), this, year, month, day);
+        }
+
+        public void onDateSet(DatePicker view, int year, int month, int day) {
+            // Do something with the date chosen by the user
+            final Calendar c = Calendar.getInstance();
+            c.set(Calendar.YEAR, year);
+            c.set(Calendar.MONTH, month);
+            c.set(Calendar.DAY_OF_MONTH, day);
+            setDueDate(c);
+        }
+
+        private void setDueDate(Calendar c) {
+            Realm realm = Realm.getDefaultInstance();
+            Task task = realm.where(Task.class).equalTo("taskId", pubTaskId).findFirst();
+            realm.beginTransaction();
+            SimpleDateFormat sdf = new SimpleDateFormat("MMM d");
+            task.setTaskDueOn(sdf.format(c.getTime()));
+            realm.commitTransaction();
+            whenDueTextView.setText(task.getTaskDueOn());
+        }
     }
 }

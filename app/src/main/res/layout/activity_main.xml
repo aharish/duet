@@ -25,6 +25,7 @@
 
     <FrameLayout
         android:layout_marginTop="52dp"
+        android:layout_marginBottom="56dp"
         android:id="@+id/project_fragment_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
@@ -34,7 +35,21 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
+        android:layout_marginBottom="72dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginLeft="16dp"
         app:srcCompat="@drawable/ic_add_white_24dp" />
+    
+    <android.support.design.widget.BottomNavigationView
+        android:id="@+id/bottom_navigation_view"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_gravity="bottom"
+        android:background="@android:color/white"
+        app:menu="@menu/bottom_navigation_main"
+        app:elevation="8dp"
+        app:itemIconTint="@drawable/bottom_color_state"
+        app:itemTextColor="@drawable/bottom_color_state"/>
 
 </android.support.design.widget.CoordinatorLayout>

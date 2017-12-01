@@ -22,7 +22,6 @@ import io.realm.RealmBaseAdapter;
 public class TasksAdapter extends RealmBaseAdapter<Task> implements ListAdapter {
 
     private static class ViewHolder {
-        //TODO Set up views
         TextView taskTitleTextView;
         CheckBox taskCompleteCheckbox;
     }

@@ -3,4 +3,37 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Title"
+        android:text="@string/add_task_title"/>
+
+    <EditText
+        android:id="@+id/add_all_task_dialog_title_edittext"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/enter_task_name"
+        android:inputType="textCapSentences|textAutoComplete"
+        android:layout_marginBottom="12dp"
+        android:layout_marginTop="24dp"
+        android:imeOptions="actionNext"/>
+
+    <EditText
+        android:id="@+id/add_all_task_dialog_description_edittext"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/enter_project_description"
+        android:layout_marginBottom="24dp"
+        android:inputType="textCapSentences|textAutoComplete"
+        android:imeOptions="actionDone"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:text="@string/add"
+        android:layout_marginRight="-16dp"
+        style="@style/Widget.AppCompat.Button.Borderless.Colored"/>
+
 </LinearLayout>

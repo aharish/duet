@@ -15,12 +15,13 @@ Duet is very much still a work-in-progress, and I will be updating this repo as 
 * Add projects with name and description
 * Add tasks under projects
 * Mark tasks as complete
+* Delete projects and tasks under the project
+* Due date for tasks
 
 ## Upcoming features
 
-* <del>Delete projects and tasks under the project</del> <mark>Done</mark>
 * Subtasks
-* Due date & deadline for tasks
+* Deadline for tasks
 
 ## Contribute
 
