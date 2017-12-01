@@ -42,15 +42,15 @@ public class EditProjectDialogFragment extends DialogFragment implements TextVie
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.add_project_dialog_fragment, container);
+        return inflater.inflate(R.layout.edit_project_dialog_fragment, container);
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        nameEditText = (EditText) view.findViewById(R.id.add_project_dialog_name_edittext);
-        descriptionEditText = (EditText) view.findViewById(R.id.add_project_dialog_description_edittext);
-        String title = getArguments().getString("title", "New Project");
+        nameEditText = (EditText) view.findViewById(R.id.edit_project_dialog_name_edittext);
+        descriptionEditText = (EditText) view.findViewById(R.id.edit_project_dialog_description_edittext);
+        String title = getArguments().getString("title", "Edit project");
         projectId = getArguments().getInt("id");
         getDialog().setTitle(title);
         nameEditText.setText(getArguments().getString("name"));

@@ -115,6 +115,7 @@ public class MainActivity extends AppCompatActivity implements AddProjectDialogF
         realm = Realm.getDefaultInstance();
         realm.beginTransaction();
         Project project = realm.where(Project.class).equalTo("projectId", pId).findFirst();
+        project.setProjectName(name);
         project.setProjectDescription(description);
         realm.commitTransaction();
         Fragment fragment = getSupportFragmentManager().findFragmentByTag(PROJECT_FRAGMENT_EDIT);
