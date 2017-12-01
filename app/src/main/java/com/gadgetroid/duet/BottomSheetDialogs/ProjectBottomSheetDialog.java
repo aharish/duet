@@ -12,8 +12,10 @@ import android.widget.LinearLayout;
 
 import com.gadgetroid.duet.R;
 import com.gadgetroid.duet.model.Project;
+import com.gadgetroid.duet.model.Task;
 
 import io.realm.Realm;
+import io.realm.RealmResults;
 
 /**
  * Created by gadgetroid on 22/07/17.
@@ -46,7 +48,9 @@ public class ProjectBottomSheetDialog extends BottomSheetDialogFragment {
             public void onClick(View v) {
                 int projectId = getArguments().getInt("projectId");
                 Project project = realm.where(Project.class).equalTo("projectId", projectId).findFirst();
+                RealmResults<Task> tasks = realm.where(Task.class).equalTo("project.projectId", projectId).findAll();
                 realm.beginTransaction();
+                tasks.deleteAllFromRealm();
                 project.deleteFromRealm();
                 realm.commitTransaction();
                 Snackbar.make(getActivity().findViewById(R.id.activity_main_coordinator_layout), "Project deleted", Snackbar.LENGTH_SHORT).show();
