@@ -53,7 +53,11 @@ public class AllTasksAdapter extends RealmBaseAdapter<Task> implements ListAdapt
             final Task item = adapterData.get(position);
             Project project = item.getProject();
             viewHolder.taskTitle.setText(item.getTaskTitle());
-            viewHolder.taskProject.setText(project.getProjectName());
+            if (project == null) {
+                viewHolder.taskProject.setText("No project");
+            } else {
+                viewHolder.taskProject.setText(project.getProjectName());
+            }
             viewHolder.taskIsDone.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

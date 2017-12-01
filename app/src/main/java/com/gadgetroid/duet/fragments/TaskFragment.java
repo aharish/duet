@@ -45,7 +45,8 @@ public class TaskFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         realm = Realm.getDefaultInstance();
         tasksListView = (ListView) view.findViewById(R.id.tasks_list_view);
-
+        AllTasksFABListener listener = (AllTasksFABListener) getActivity();
+        listener.setFAB();
         setupListView();
     }
 

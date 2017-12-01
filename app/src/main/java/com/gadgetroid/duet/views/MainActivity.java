@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.gadgetroid.duet.DialogFragments.AddProjectDialogFragment;
+import com.gadgetroid.duet.DialogFragments.AddTaskDialogFragment;
 import com.gadgetroid.duet.DialogFragments.AddTaskToProjectDialogFragment;
 import com.gadgetroid.duet.DialogFragments.EditProjectDialogFragment;
 import com.gadgetroid.duet.R;
@@ -27,7 +28,7 @@ import io.realm.Realm;
 
 public class MainActivity extends AppCompatActivity implements AddProjectDialogFragment.AddProjectDialogListener,
         ProjectFragment.ChangeProjectFABActionListener, ProjectDetailFragment.ChangeProjectDetailFABActionListener,
-        AddTaskToProjectDialogFragment.AddTaskDialogListener, EditProjectDialogFragment.EditProjectDialogListener,
+        AddTaskToProjectDialogFragment.AddTaskDialogListener, AddTaskDialogFragment.AddGenericTaskDialogListener, EditProjectDialogFragment.EditProjectDialogListener,
         TaskFragment.AllTasksFABListener {
 
     private Realm realm;
@@ -108,6 +109,13 @@ public class MainActivity extends AppCompatActivity implements AddProjectDialogF
     @Override
     public void setFAB() {
         //TODO Open add task dialog
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showAddGenericTaskDialog();
+            }
+        });
     }
 
     @Override
@@ -159,6 +167,24 @@ public class MainActivity extends AppCompatActivity implements AddProjectDialogF
         Toast.makeText(this, "Added task successfully", Toast.LENGTH_SHORT).show();
     }
 
+    @Override
+    public void onFinishAddGenericTask(String title, String description, boolean isComplete) {
+        realm = Realm.getDefaultInstance();
+        realm.beginTransaction();
+        int nextId;
+        if (realm.where(Task.class).count() == 0) {
+            nextId = 1;
+        } else {
+            nextId = (realm.where(Task.class).findAll().max("taskId").intValue() + 1);
+        }
+        Task task = realm.createObject(Task.class, nextId);
+        task.setTaskTitle(title);
+        task.setTaskDescription(description);
+        task.setTaskComplete(isComplete);
+        realm.commitTransaction();
+        Toast.makeText(this, "Added task successfully", Toast.LENGTH_SHORT).show();
+    }
+
     private void showAddProjectDialog() {
         FragmentManager fm = getSupportFragmentManager();
         AddProjectDialogFragment addProjectDialogFragment = AddProjectDialogFragment.newInstance("New project");
@@ -169,6 +195,12 @@ public class MainActivity extends AppCompatActivity implements AddProjectDialogF
         FragmentManager fm = getSupportFragmentManager();
         AddTaskToProjectDialogFragment addTaskToProjectDialogFragment = AddTaskToProjectDialogFragment.newInstance("New task", projectId);
         addTaskToProjectDialogFragment.show(fm, "fragment_add_task");
+    }
+
+    private void showAddGenericTaskDialog() {
+        FragmentManager fm = getSupportFragmentManager();
+        AddTaskDialogFragment addTaskDialogFragment = AddTaskDialogFragment.newInstance();
+        addTaskDialogFragment.show(fm, "fragment_add_generic_task");
     }
 
     private void changeFragment(int id, Bundle savedInstanceState) {

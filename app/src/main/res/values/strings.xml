@@ -9,4 +9,6 @@
     <string name="add_task_title">Add Task</string>
     <string name="project_action_edit">Edit project</string>
     <string name="delete">Delete</string>
+    <string name="edit_project_title">Edit project</string>
+    <string name="update">Update</string>
 </resources>
