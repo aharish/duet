@@ -3,12 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingLeft="12dp"
-    android:paddingRight="12dp"
-    android:paddingTop="16dp"
-    android:paddingBottom="8dp">
+    android:paddingTop="16dp">
 
     <LinearLayout
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -49,6 +48,8 @@
     </LinearLayout>
 
     <ViewSwitcher
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp"
         android:id="@+id/task_detail_desc_view_switcher"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -78,6 +79,8 @@
     </ViewSwitcher>
 
     <RelativeLayout
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="16dp"
@@ -113,15 +116,30 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
-        android:paddingBottom="8dp">
+        android:background="#eeeeee"
+        android:paddingTop="6dp"
+        android:paddingBottom="4dp">
 
         <ImageButton
-            android:padding="8dp"
+            android:padding="4dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:srcCompat="@drawable/ic_event_grey_700_24dp"
             android:background="?android:selectableItemBackground"
             android:id="@+id/task_detail_when_due_button" />
+
+        <ImageButton
+            android:padding="4dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/ic_subtask_add_grey_700_24dp"
+            android:layout_toRightOf="@+id/task_detail_when_due_button"
+            android:background="?android:selectableItemBackground"
+            android:id="@+id/task_detail_add_subtask_button" />
 
     </RelativeLayout>
 

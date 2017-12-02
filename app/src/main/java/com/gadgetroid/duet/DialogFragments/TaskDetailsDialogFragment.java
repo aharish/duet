@@ -143,7 +143,11 @@ public class TaskDetailsDialogFragment extends DialogFragment implements TextVie
         taskIsDoneCheckBox.setChecked(task.isTaskComplete() ? true : false);
         titleTextView.setText(task.getTaskTitle());
         descriptionTextView.setText(task.getTaskDescription());
-        whenDueTextView.setText(task.getTaskDueOn());
+        if(task.getTaskDueOn() == null) {
+            whenDueTextView.setText("No due date set");
+        } else {
+            whenDueTextView.setText(task.getTaskDueOn());
+        }
         titleTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

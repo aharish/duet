@@ -4,7 +4,8 @@
     android:paddingLeft="16dp"
     android:paddingRight="16dp"
     android:layout_height="72dp"
-    android:gravity="center">
+    android:gravity="center"
+    android:descendantFocusability="blocksDescendants">
 
     <CheckBox
         android:id="@+id/all_tasks_checkbox"
