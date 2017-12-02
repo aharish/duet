@@ -38,7 +38,7 @@ public class TaskDetailsDialogFragment extends DialogFragment implements TextVie
     private ViewSwitcher titleViewSwitcher, descriptionViewSwitcher;
     public static TextView titleTextView, descriptionTextView, whenDueTextView;
     private EditText titleEditText, descriptionEditText;
-    private ImageButton dueOnButton;
+    private ImageButton dueOnButton, deleteTaskButton;
     private Realm realm;
     public static int pubTaskId;
 
@@ -80,6 +80,7 @@ public class TaskDetailsDialogFragment extends DialogFragment implements TextVie
         titleEditText = (EditText) view.findViewById(R.id.task_detail_title_edit_text);
         descriptionEditText = (EditText) view.findViewById(R.id.task_detail_desc_edit_text);
         dueOnButton = (ImageButton) view.findViewById(R.id.task_detail_when_due_button);
+        deleteTaskButton = (ImageButton) view.findViewById(R.id.task_detail_detele_task_button);
         whenDueTextView = (TextView) view.findViewById(R.id.task_detail_when_due_tv);
 
         descriptionEditText.setOnEditorActionListener(this);
@@ -103,6 +104,17 @@ public class TaskDetailsDialogFragment extends DialogFragment implements TextVie
             public void onClick(View v) {
                 DialogFragment datePickerFragment = new DatePickerFragment();
                 datePickerFragment.show(getFragmentManager(), "DatePicker");
+            }
+        });
+
+        deleteTaskButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Task task = realm.where(Task.class).equalTo("taskId", pubTaskId).findFirst();
+                realm.beginTransaction();
+                task.deleteFromRealm();
+                dismiss();
+                realm.commitTransaction();
             }
         });
 
