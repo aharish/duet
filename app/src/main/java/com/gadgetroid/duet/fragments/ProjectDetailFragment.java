@@ -1,5 +1,6 @@
 package com.gadgetroid.duet.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -18,11 +19,11 @@ import android.widget.TextView;
 
 import com.gadgetroid.duet.BottomSheetDialogs.TaskBottomSheetDialog;
 import com.gadgetroid.duet.DialogFragments.EditProjectDialogFragment;
-import com.gadgetroid.duet.DialogFragments.TaskDetailsDialogFragment;
 import com.gadgetroid.duet.R;
 import com.gadgetroid.duet.adapter.TasksAdapter;
 import com.gadgetroid.duet.model.Project;
 import com.gadgetroid.duet.model.Task;
+import com.gadgetroid.duet.views.TaskDetailActivity;
 
 import io.realm.Realm;
 import io.realm.RealmResults;
@@ -112,14 +113,14 @@ public class ProjectDetailFragment extends Fragment {
         fragment.show(fm, "fragment_edit_project");
     }
 
-    private void showTaskDetailsDialog(int taskId) {
-        FragmentManager fm = getFragmentManager();
-        Bundle args = new Bundle();
-        args.putInt("taskId", taskId);
-        TaskDetailsDialogFragment fragment = TaskDetailsDialogFragment.newInstance("Task details");
-        fragment.setArguments(args);
-        fragment.show(fm, "fragment_task_details");
-    }
+//    private void showTaskDetailsDialog(int taskId) {
+//        FragmentManager fm = getFragmentManager();
+//        Bundle args = new Bundle();
+//        args.putInt("taskId", taskId);
+//        TaskDetailsDialogFragment fragment = TaskDetailsDialogFragment.newInstance("Task details");
+//        fragment.setArguments(args);
+//        fragment.show(fm, "fragment_task_details");
+//    }
 
     public void setMetadata() {
         Project project = realm.where(Project.class).equalTo("projectId", pId).findFirst();
@@ -136,7 +137,10 @@ public class ProjectDetailFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Task task = adapter.getItem(position);
-                showTaskDetailsDialog(task.getTaskId());
+//                showTaskDetailsDialog(task.getTaskId());
+                Intent taskDetailsActivityIntent = new Intent(getContext(), TaskDetailActivity.class);
+                taskDetailsActivityIntent.putExtra("taskId", task.getTaskId());
+                startActivity(taskDetailsActivityIntent);
             }
         });
         tasksListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {

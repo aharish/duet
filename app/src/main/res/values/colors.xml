@@ -6,4 +6,5 @@
     <color name="colorTransparent">#00000000</color>
     <color name="secondaryText">#8A000000</color>
     <color name="grey100">#F5F5F5</color>
+    <color name="colorAccentPressedTaskDetail">#1f8d6e63</color>
 </resources>

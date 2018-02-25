@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/activity_task_detail"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.gadgetroid.duet.views.TaskDetailActivity">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="128dp"
+        app:elevation="4dp"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+        <TextView
+            android:id="@+id/activity_task_detail_task_title_textview"
+            android:paddingLeft="72dp"
+            android:layout_width="match_parent"
+            android:gravity="center_vertical"
+            android:layout_height="72dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+            android:textColor="#ffffff"
+            android:text="Task title"/>
+
+    </android.support.design.widget.AppBarLayout>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="108dp"
+        android:layout_marginLeft="8dp"
+        app:srcCompat="@drawable/ic_subtask_add_white_24dp"
+        app:fabSize="mini"
+        app:elevation="6dp" />
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:paddingTop="32dp"
+        android:layout_marginTop="128dp"
+        android:layout_marginBottom="47dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="24dp">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_info_black_24dp" />
+
+                <TextView
+                    android:id="@+id/activity_task_detail_task_desc_textview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/lorem_ipsum_sentence"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                    android:lineSpacingMultiplier="1.25"
+                    android:textColor="@android:color/black"
+                    android:paddingLeft="32dp"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginTop="8dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="24dp">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_schedule_black_24dp" />
+
+                <TextView
+                    android:id="@+id/activity_task_detail_task_due_textview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/test_date"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                    android:lineSpacingMultiplier="1.25"
+                    android:textColor="@android:color/black"
+                    android:paddingLeft="32dp"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/activity_task_detail_subtask_linear_layout"
+                android:layout_width="match_parent"
+                android:orientation="vertical"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:gravity="center_vertical"
+                    android:text="Subtasks"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    android:textStyle="bold"
+                    android:textColor="#D1795548"
+                    android:textSize="14sp"/>
+
+                <ListView
+                    android:id="@+id/activity_task_detail_subtask_list_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="47dp"
+        android:layout_gravity="bottom">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.1dp"
+            android:background="#1F000000"/>
+
+        <Button
+            android:id="@+id/activity_task_detail_task_completion_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="MARK as done"
+            style="@android:style/Widget.DeviceDefault.Button.Borderless.Small"
+            android:layout_alignParentEnd="true"
+            android:textColor="#8A000000" />
+
+    </RelativeLayout>
+
+</android.support.design.widget.CoordinatorLayout>

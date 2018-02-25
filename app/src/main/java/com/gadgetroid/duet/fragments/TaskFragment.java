@@ -11,7 +11,6 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.gadgetroid.duet.BottomSheetDialogs.TaskBottomSheetDialog;
-import com.gadgetroid.duet.DialogFragments.TaskDetailsDialogFragment;
 import com.gadgetroid.duet.R;
 import com.gadgetroid.duet.adapter.AllTasksAdapter;
 import com.gadgetroid.duet.model.Task;
@@ -58,13 +57,13 @@ public class TaskFragment extends Fragment {
         FragmentManager fm = getFragmentManager();
         Bundle args = new Bundle();
         args.putInt("taskId", taskId);
-        TaskDetailsDialogFragment fragment = TaskDetailsDialogFragment.newInstance("Task details");
-        fragment.setArguments(args);
-        fragment.show(fm, "fragment_task_details");
+//        TaskDetailsDialogFragment fragment = TaskDetailsDialogFragment.newInstance("Task details");
+//        fragment.setArguments(args);
+//        fragment.show(fm, "fragment_task_details");
     }
 
     private void setupListView() {
-        RealmResults<Task> tasks = realm.where(Task.class).findAll().sort("isTaskComplete");
+        RealmResults<Task> tasks = realm.where(Task.class).equalTo("isTaskComplete", false).findAll().sort("taskDueOn");
         adapter = new AllTasksAdapter(tasks);
         tasksListView.setAdapter(adapter);
         tasksListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

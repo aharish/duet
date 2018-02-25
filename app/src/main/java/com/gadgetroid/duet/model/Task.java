@@ -18,7 +18,7 @@ public class Task extends RealmObject {
 
     private boolean isTaskComplete;
 
-    private String taskDueOn;
+    private long taskDueOn;
 
     private Project project;
 
@@ -57,11 +57,11 @@ public class Task extends RealmObject {
         isTaskComplete = taskComplete;
     }
 
-    public String getTaskDueOn() {
+    public long getTaskDueOn() {
         return taskDueOn;
     }
 
-    public void setTaskDueOn(String taskDueOn) {
+    public void setTaskDueOn(long taskDueOn) {
         this.taskDueOn = taskDueOn;
     }
 

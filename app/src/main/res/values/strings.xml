@@ -11,4 +11,11 @@
     <string name="delete">Delete</string>
     <string name="edit_project_title">Edit project</string>
     <string name="update">Update</string>
+    <string name="lorem_ipsum_sentence">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce ultricies rutrum rhoncus. Quisque ornare massa non odio malesuada, eu imperdiet justo elementum. Praesent condimentum pretium.</string>
+    <string name="test_date">Saturday, February 24</string>
+    <string name="task_action_edit">Edit task</string>
+    <string name="task_action_delete">Delete task</string>
+    <string name="task_action_save">Save</string>
+    <string name="add_sub_task_title">Add subtask</string>
+    <string name="enter_sub_task_title">Enter subtask title</string>
 </resources>

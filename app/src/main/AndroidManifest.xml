@@ -19,6 +19,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".views.TaskDetailActivity"
+            android:theme="@style/TaskDetailsTheme">
+
+        </activity>
+        <activity
+            android:name=".views.TaskEditActivity"
+            android:theme="@style/TaskDetailsTheme">
+
+        </activity>
     </application>
 
 </manifest>

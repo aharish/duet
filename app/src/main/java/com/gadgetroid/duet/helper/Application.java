@@ -15,7 +15,7 @@ public class Application extends android.app.Application {
         Realm.init(getApplicationContext());
 
         RealmConfiguration configuration = new RealmConfiguration.Builder()
-                .schemaVersion(2)
+                .schemaVersion(3)
                 .migration(new Migration())
                 .build();
 

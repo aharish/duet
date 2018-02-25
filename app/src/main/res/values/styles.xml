@@ -20,4 +20,16 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+    <style name="TaskDetailsTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="actionMenuTextColor">@android:color/white</item>
+        <item name="colorPrimary">@color/colorPrimaryTaskDetail</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkTaskDetail</item>
+        <item name="colorAccent">@color/colorAccentTaskDetail</item>
+    </style>
+
+    <color name="colorPrimaryTaskDetail">#795548</color>
+    <color name="colorPrimaryDarkTaskDetail">#5D4037</color>
+    <color name="colorAccentTaskDetail">#8D6E63</color>
 </resources>

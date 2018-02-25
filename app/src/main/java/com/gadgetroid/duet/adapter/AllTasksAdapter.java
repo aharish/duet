@@ -26,6 +26,8 @@ public class AllTasksAdapter extends RealmBaseAdapter<Task> implements ListAdapt
         CheckBox taskIsDone;
         TextView taskTitle;
         TextView taskProject;
+        TextView dueDate;
+        TextView dueMonth;
     }
 
     public AllTasksAdapter(@Nullable OrderedRealmCollection<Task> data) {
@@ -44,6 +46,8 @@ public class AllTasksAdapter extends RealmBaseAdapter<Task> implements ListAdapt
             viewHolder.taskIsDone = (CheckBox) convertView.findViewById(R.id.all_tasks_checkbox);
             viewHolder.taskProject = (TextView) convertView.findViewById(R.id.all_tasks_project);
             viewHolder.taskTitle = (TextView) convertView.findViewById(R.id.all_tasks_title);
+            viewHolder.dueDate = (TextView) convertView.findViewById(R.id.all_tasks_due_date_tv);
+            viewHolder.dueMonth = (TextView) convertView.findViewById(R.id.all_tasks_due_month_tv);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
@@ -57,6 +61,17 @@ public class AllTasksAdapter extends RealmBaseAdapter<Task> implements ListAdapt
                 viewHolder.taskProject.setText("No project");
             } else {
                 viewHolder.taskProject.setText(project.getProjectName());
+            }
+            Realm realm = Realm.getDefaultInstance();
+            Task task = realm.where(Task.class).equalTo("taskId", item.getTaskId()).findFirst();
+            long taskDueOn = task.getTaskDueOn();
+            if (taskDueOn == 0) {
+                viewHolder.dueDate.setText("");
+                viewHolder.dueMonth.setText("");
+            } else {
+                String dueOn = String.valueOf(taskDueOn);
+                viewHolder.dueDate.setText(dueOn);
+                viewHolder.dueMonth.setText(dueOn);
             }
             viewHolder.taskIsDone.setOnClickListener(new View.OnClickListener() {
                 @Override
