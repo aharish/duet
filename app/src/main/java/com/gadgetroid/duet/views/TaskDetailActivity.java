@@ -34,7 +34,7 @@ public class TaskDetailActivity extends AppCompatActivity implements AddSubTaskD
     private Button completionButton;
     private FloatingActionButton addSubTaskButton;
     private ListView subTaskListView;
-    private LinearLayout subTaskLinearLayout;
+    private LinearLayout subTaskLinearLayout, descriptionWrapperLinearLayout;
     private SubtasksAdapter subtasksAdapter;
     boolean isInvisible = true;
 
@@ -97,12 +97,19 @@ public class TaskDetailActivity extends AppCompatActivity implements AddSubTaskD
         completionButton = (Button) findViewById(R.id.activity_task_detail_task_completion_button);
         addSubTaskButton = (FloatingActionButton) findViewById(R.id.fab);
         subTaskLinearLayout = (LinearLayout) findViewById(R.id.activity_task_detail_subtask_linear_layout);
+        descriptionWrapperLinearLayout = (LinearLayout) findViewById(R.id.activity_task_detail_description_wrapper);
         subTaskListView = (ListView) findViewById(R.id.activity_task_detail_subtask_list_view);
     }
 
     private void setMetadata(Task task) {
         taskTitleTextView.setText(task.getTaskTitle());
-        taskDescTextView.setText(task.getTaskDescription());
+
+        if (task.getTaskDescription().isEmpty()) {
+            descriptionWrapperLinearLayout.setVisibility(View.GONE);
+        } else {
+            descriptionWrapperLinearLayout.setVisibility(View.VISIBLE);
+            taskDescTextView.setText(task.getTaskDescription());
+        }
         taskDueTextView.setText(getFormattedDate(task));
 
         if (task.isTaskComplete())
@@ -176,6 +183,10 @@ public class TaskDetailActivity extends AppCompatActivity implements AddSubTaskD
 
         // Get the saved year
         savedYear = saved.get(Calendar.YEAR);
+
+        if (task.getTaskDueOn() == 0) {
+            return "Today";
+        }
 
         if (saved != null && now != null) {
 

@@ -1,9 +1,9 @@
 package com.gadgetroid.duet.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +14,7 @@ import com.gadgetroid.duet.BottomSheetDialogs.TaskBottomSheetDialog;
 import com.gadgetroid.duet.R;
 import com.gadgetroid.duet.adapter.AllTasksAdapter;
 import com.gadgetroid.duet.model.Task;
+import com.gadgetroid.duet.views.TaskDetailActivity;
 
 import io.realm.Realm;
 import io.realm.RealmResults;
@@ -53,15 +54,6 @@ public class TaskFragment extends Fragment {
         setupListView();
     }
 
-    private void showTaskDetailsDialog(int taskId) {
-        FragmentManager fm = getFragmentManager();
-        Bundle args = new Bundle();
-        args.putInt("taskId", taskId);
-//        TaskDetailsDialogFragment fragment = TaskDetailsDialogFragment.newInstance("Task details");
-//        fragment.setArguments(args);
-//        fragment.show(fm, "fragment_task_details");
-    }
-
     private void setupListView() {
         RealmResults<Task> tasks = realm.where(Task.class).equalTo("isTaskComplete", false).findAll().sort("taskDueOn");
         adapter = new AllTasksAdapter(tasks);
@@ -70,7 +62,9 @@ public class TaskFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Task task = adapter.getItem(position);
-                showTaskDetailsDialog(task.getTaskId());
+                Intent intent = new Intent(getContext(), TaskDetailActivity.class);
+                intent.putExtra("taskId", task.getTaskId());
+                startActivity(intent);
             }
         });
         tasksListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {

@@ -12,6 +12,9 @@ import com.gadgetroid.duet.R;
 import com.gadgetroid.duet.model.Project;
 import com.gadgetroid.duet.model.Task;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 import io.realm.OrderedRealmCollection;
 import io.realm.Realm;
 import io.realm.RealmBaseAdapter;
@@ -65,13 +68,20 @@ public class AllTasksAdapter extends RealmBaseAdapter<Task> implements ListAdapt
             Realm realm = Realm.getDefaultInstance();
             Task task = realm.where(Task.class).equalTo("taskId", item.getTaskId()).findFirst();
             long taskDueOn = task.getTaskDueOn();
+            Calendar c = Calendar.getInstance();
+            SimpleDateFormat dateFormat, monthFormat;
             if (taskDueOn == 0) {
-                viewHolder.dueDate.setText("");
-                viewHolder.dueMonth.setText("");
+                c.setTimeInMillis(System.currentTimeMillis());
+                dateFormat = new SimpleDateFormat("d");
+                monthFormat = new SimpleDateFormat("MMM");
+                viewHolder.dueDate.setText(dateFormat.format(c.getTime()));
+                viewHolder.dueMonth.setText(monthFormat.format(c.getTime()));
             } else {
-                String dueOn = String.valueOf(taskDueOn);
-                viewHolder.dueDate.setText(dueOn);
-                viewHolder.dueMonth.setText(dueOn);
+                c.setTimeInMillis(taskDueOn);
+                dateFormat = new SimpleDateFormat("d");
+                monthFormat = new SimpleDateFormat("MMM");
+                viewHolder.dueDate.setText(dateFormat.format(c.getTime()));
+                viewHolder.dueMonth.setText(monthFormat.format(c.getTime()));
             }
             viewHolder.taskIsDone.setOnClickListener(new View.OnClickListener() {
                 @Override

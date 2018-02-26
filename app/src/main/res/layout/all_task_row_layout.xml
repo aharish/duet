@@ -4,46 +4,16 @@
     android:paddingLeft="16dp"
     android:paddingRight="16dp"
     android:layout_height="72dp"
-    android:gravity="center"
     android:descendantFocusability="blocksDescendants">
 
-    <CheckBox
-        android:id="@+id/all_tasks_checkbox"
-        android:gravity="center_vertical"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
     <LinearLayout
-        android:paddingLeft="24dp"
-        android:layout_toRightOf="@+id/all_tasks_checkbox"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/all_tasks_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingBottom="2dp"
-            android:textSize="16sp"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            android:text="Task"/>
-
-        <TextView
-            android:id="@+id/all_tasks_project"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
-            android:text="Project"/>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_alignParentRight="true"
+        android:id="@+id/all_task_due_date_wrapper"
+        android:layout_alignParentLeft="true"
         android:orientation="vertical"
-        android:layout_width="wrap_content"
         android:gravity="center_horizontal"
+        android:layout_width="wrap_content"
+        android:layout_centerVertical="true"
+        android:paddingBottom="3dp"
         android:layout_height="wrap_content">
 
         <TextView
@@ -65,5 +35,38 @@
             android:text="Dec"/>
 
     </LinearLayout>
+
+    <LinearLayout
+        android:paddingLeft="24dp"
+        android:layout_toRightOf="@+id/all_task_due_date_wrapper"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/all_tasks_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:paddingBottom="4dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:text="Task"/>
+
+        <TextView
+            android:id="@+id/all_tasks_project"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="4dp"
+            android:text="Project"/>
+
+    </LinearLayout>
+
+    <CheckBox
+        android:id="@+id/all_tasks_checkbox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_alignParentEnd="true" />
 
 </RelativeLayout>
