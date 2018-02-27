@@ -1,5 +1,6 @@
 package com.gadgetroid.duet.views;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -198,9 +199,8 @@ public class MainActivity extends AppCompatActivity implements AddProjectDialogF
     }
 
     private void showAddGenericTaskDialog() {
-        FragmentManager fm = getSupportFragmentManager();
-        AddTaskDialogFragment addTaskDialogFragment = AddTaskDialogFragment.newInstance();
-        addTaskDialogFragment.show(fm, "fragment_add_generic_task");
+        Intent intent = new Intent(this, TaskAddActivity.class);
+        startActivity(intent);
     }
 
     private void changeFragment(int id, Bundle savedInstanceState) {
