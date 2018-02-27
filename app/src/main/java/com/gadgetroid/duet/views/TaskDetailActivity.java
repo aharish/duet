@@ -80,6 +80,9 @@ public class TaskDetailActivity extends AppCompatActivity implements AddSubTaskD
             startActivity(editTaskIntent);
             return true;
         }
+        if (id == R.id.task_action_delete) {
+            deleteTask();
+        }
         return super.onOptionsItemSelected(item);
     }
 
@@ -148,7 +151,6 @@ public class TaskDetailActivity extends AppCompatActivity implements AddSubTaskD
         addSubTaskButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO Open DialogFragment to add new subtask
                 FragmentManager fm = getSupportFragmentManager();
                 Bundle args = new Bundle();
                 args.putInt("taskId", getIntent().getExtras().getInt("taskId"));
@@ -157,6 +159,19 @@ public class TaskDetailActivity extends AppCompatActivity implements AddSubTaskD
                 fragment.show(fm, "add_subtask_dialog_fragment");
             }
         });
+    }
+
+    private void deleteTask() {
+        final Task task = realm.where(Task.class).equalTo("taskId", getIntent().getExtras().getInt("taskId")).findFirst();
+        final RealmResults<Subtask> subtasks = realm.where(Subtask.class).equalTo("task.taskId", task.getTaskId()).findAll();
+        realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                subtasks.deleteAllFromRealm();
+                task.deleteFromRealm();
+            }
+        });
+        finishAfterTransition();
     }
 
     private String getFormattedDate(Task task) {
