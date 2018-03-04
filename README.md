@@ -1,6 +1,6 @@
 # Duet
 
-Duet is an open-source task management application with support for projects, tasks and sub-tasks, based upon the GTD methodology by Sir David Allen. 
+Duet is an open-source task (to-do list) management application with support for projects, tasks and sub-tasks, based upon the GTD methodology by Sir David Allen. 
 
 <p align="center">
 	<img src="Screenshots/screen1.png" width="200">
@@ -17,10 +17,11 @@ Duet is very much still a work-in-progress, and I will be updating this repo as 
 * Mark tasks as complete
 * Delete projects and tasks under the project
 * Due date for tasks
+* Subtasks
+* Progress bar view for individual projects in project list screen
 
 ## Upcoming features
 
-* Subtasks
 * Deadline for tasks
 
 ## Contribute
