@@ -8,7 +8,6 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.ColorFilter;
 import android.graphics.Paint;
-import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
 import android.util.DisplayMetrics;
@@ -26,6 +25,8 @@ public class PieProgressDrawable extends Drawable {
     RectF mInnerBoundsF;
     final float START_ANGLE = 0.f;
     float mDrawTo;
+    int mColor;
+    float borderWidth;
 
     public PieProgressDrawable() {
         super();
@@ -37,7 +38,7 @@ public class PieProgressDrawable extends Drawable {
      * @param widthDp in dip for the pie border
      */
     public void setBorderWidth(float widthDp, DisplayMetrics dm) {
-        float borderWidth = widthDp * dm.density;
+        borderWidth = widthDp * dm.density;
         mPaint.setStrokeWidth(borderWidth);
     }
 
@@ -45,14 +46,17 @@ public class PieProgressDrawable extends Drawable {
      * @param color you want the pie to be drawn in
      */
     public void setColor(int color) {
+        mColor = color;
         mPaint.setColor(color);
     }
 
     @Override
     public void draw(Canvas canvas) {
+        mBoundsF = mInnerBoundsF = new RectF(getBounds());
         // Rotate the canvas around the center of the pie by 90 degrees
         // counter clockwise so the pie stars at 12 o'clock.
         canvas.rotate(-90f, getBounds().centerX(), getBounds().centerY());
+        mBoundsF.inset(4,4);
         mPaint.setStyle(Paint.Style.STROKE);
         canvas.drawOval(mBoundsF, mPaint);
         mPaint.setStyle(Paint.Style.STROKE);
@@ -60,7 +64,7 @@ public class PieProgressDrawable extends Drawable {
         mInnerBoundsF.inset(8f, 8f);
         mPaint.setColor(Color.TRANSPARENT);
         canvas.drawOval(mInnerBoundsF, mPaint);
-        mPaint.setColor(Color.parseColor("#009688"));
+        mPaint.setColor(mColor);
         mPaint.setStyle(Paint.Style.FILL);
         canvas.drawArc(mInnerBoundsF, START_ANGLE, mDrawTo, true, mPaint);
 
@@ -68,15 +72,6 @@ public class PieProgressDrawable extends Drawable {
         // decorations such as a stroke) here..
         // Don't forget to rotate the canvas back if you plan to add text!
         // ...
-    }
-
-    @Override
-    protected void onBoundsChange(Rect bounds) {
-        super.onBoundsChange(bounds);
-        mBoundsF = mInnerBoundsF = new RectF(bounds);
-//        final int halfBorder = (int) (mPaint.getStrokeWidth()/2f + 4f);
-        final int halfBorder = 4;
-        mInnerBoundsF.inset(halfBorder, halfBorder);
     }
 
     @Override
